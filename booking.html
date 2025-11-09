@@ -6,14 +6,37 @@
   <title>Bulgani Urban Homes Ltd - Contact</title>
   <link rel="icon" type="image/png" href="bulgani-logo.png">
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
-  <!-- Leaflet CSS -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            // Dark mode palette
+            'dark-bg': '#0A0A0A', // Deep black background
+            'dark-card': '#1C1C1E', // Slightly lighter card background (zinc-800 equivalent)
+            'gold-accent': '#C2952E', // Slightly muted, elegant gold
+            'gold-hover': '#D4AF37', // Brighter gold for interaction
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            serif: ['Playfair Display', 'serif'],
+          },
+          boxShadow: {
+            // Framer-style elevation/glow
+            'card-elevated': '0 10px 20px rgba(0, 0, 0, 0.2), 0 5px 10px rgba(194, 149, 46, 0.1)',
+          }
+        }
+      }
+    }
+  </script>
+
   <style>
     /* Custom Font Families */
     body {
-      font-family: 'Poppins', sans-serif;
+      font-family: 'Inter', sans-serif;
     }
     h1, h2, h3, h4 {
       font-family: 'Playfair Display', serif;
@@ -23,20 +46,23 @@
       scroll-behavior: smooth;
     }
     /* Custom Colors */
-    .text-gold { color: #d4af37; }
-    .bg-gold { background-color: #d4af37; }
+    .text-gold-accent { color: #C2952E; }
+    .bg-gold-accent { background-color: #C2952E; }
     .bg-gradient-section {
-      background: linear-gradient(135deg, #1a202c 0%, #2d3748 100%);
+      /* Darker, moodier gradient */
+      background: linear-gradient(135deg, #0A0A0A 0%, #171717 100%);
     }
-    /* Glassmorphism for Form */
+    /* Glassmorphism for Form - Dark Mode Compliant */
     .glassmorphism {
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(28, 28, 30, 0.6); /* dark-card with opacity */
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.08); /* subtle white border */
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
     }
     /* Mobile Menu */
     .mobile-menu {
       display: none;
+      transition: all 0.3s ease-out;
     }
     @media (max-width: 640px) {
       .desktop-nav {
@@ -47,26 +73,33 @@
       }
       .mobile-menu.active {
         display: flex;
+        opacity: 1;
+        visibility: visible;
       }
     }
-    /* Form Input Styling */
+    /* Form Input Styling - Dark Mode Compliant */
     input, select, textarea {
       transition: all 0.3s ease;
+      background-color: #0A0A0A; /* Deep dark background */
+      color: #E5E7EB; /* Light grey text */
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 0.75rem; /* Framer-style rounded corners */
     }
     input:focus, select:focus, textarea:focus {
-      border-color: #d4af37;
-      box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.2);
+      border-color: #C2952E;
+      box-shadow: 0 0 0 3px rgba(194, 149, 46, 0.3);
       outline: none;
     }
     /* Map Styling */
     #map {
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.08);
     }
     /* Animations */
     .fade-in {
       opacity: 0;
-      transform: translateY(20px);
-      animation: fadeIn 1s ease-out forwards;
+      transform: translateY(15px);
+      animation: fadeIn 0.8s ease-out forwards;
     }
     @keyframes fadeIn {
       to {
@@ -76,98 +109,133 @@
     }
     /* Hover Effects */
     .hover-scale {
-      transition: transform 0.3s ease;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
     .hover-scale:hover {
-      transform: scale(1.05);
+      transform: scale(1.03);
+    }
+    /* Framer-style navigation bar */
+    .framer-nav {
+      background: rgba(28, 28, 30, 0.8); /* Dark card with opacity */
+      backdrop-filter: blur(15px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    /* Hover glow for CTA buttons */
+    .cta-glow {
+      box-shadow: 0 0 0 0 rgba(194, 149, 46, 0);
+      transition: box-shadow 0.3s ease;
+    }
+    .cta-glow:hover {
+      box-shadow: 0 0 20px rgba(194, 149, 46, 0.6);
     }
   </style>
 </head>
-<body class="bg-gray-50 text-gray-900">
+<body class="bg-dark-bg text-gray-100">
 
-  <!-- Header -->
-  <header class="bg-white sticky top-0 z-20 shadow-xl">
+  <header class="framer-nav fixed top-0 w-full z-20">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
-      <!-- Logo and Name -->
       <div class="flex items-center space-x-3">
         <a href="index.html">
-          <img src="bulgani-logo.png" alt="Bulgani Group Logo" class="w-12 sm:w-16" />
+          <img src="bulgani-logo.png" alt="Bulgani Group Logo" class="w-10 sm:w-12" />
         </a>
         <div>
-          <h1 class="text-xl sm:text-2xl font-bold text-gold">Bulgani Urban Homes</h1>
-          <p class="text-xs sm:text-sm text-gray-600">Landmarks Today, Legacies Tomorrow</p>
+          <h1 class="text-xl sm:text-2xl font-bold text-gold-accent font-serif tracking-tight">Bulgani Urban Homes</h1>
+          <p class="text-xs sm:text-sm text-gray-400">Landmarks Today, Legacies Tomorrow</p>
         </div>
       </div>
-      <!-- Navigation -->
-      <nav class="desktop-nav hidden sm:flex space-x-6 text-gray-600 text-sm font-medium">
-        <a href="index.html#projects" class="hover:text-gold transition">Projects</a>
-        <a href="index.html#about" class="hover:text-gold transition">About Our Clients</a>
-        <a href="booking.html" class="hover:text-gold transition">Booking</a>
+      <nav class="desktop-nav hidden sm:flex space-x-8 text-gray-300 text-sm font-medium">
+        <a href="index.html#projects" class="hover:text-gold-hover transition">Projects</a>
+        <a href="index.html#about" class="hover:text-gold-hover transition">About Our Clients</a>
+        <a href="booking.html" class="bg-gold-accent text-dark-bg px-4 py-2 rounded-full font-semibold hover:bg-gold-hover transition hover-scale">Booking</a>
       </nav>
-      <!-- Mobile Nav Button -->
-      <button class="mobile-menu-button sm:hidden text-gray-600 hover:text-gold focus:outline-none">
+      <button class="mobile-menu-button sm:hidden text-gray-300 hover:text-gold-hover focus:outline-none">
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
         </svg>
       </button>
     </div>
-    <!-- Mobile Menu -->
-    <div class="mobile-menu flex-col items-center bg-white shadow-lg px-4 py-4 sm:hidden">
-      <a href="index.html#projects" class="block py-2 text-gray-600 hover:text-gold text-sm font-medium">Projects</a>
-      <a href="index.html#about" class="block py-2 text-gray-600 hover:text-gold text-sm font-medium">About Our Clients</a>
-      <a href="booking.html" class="block py-2 text-gray-600 hover:text-gold text-sm font-medium">Booking</a>
+    <div class="mobile-menu flex-col items-center bg-dark-card/90 shadow-2xl px-4 py-4 sm:hidden fixed inset-x-0 top-[70px] border-t border-white/5 opacity-0 visibility-hidden">
+      <a href="index.html#projects" class="block py-2 text-gray-300 hover:text-gold-hover text-base font-medium">Projects</a>
+      <a href="index.html#about" class="block py-2 text-gray-300 hover:text-gold-hover text-base font-medium">About Our Clients</a>
+      <a href="booking.html" class="block py-2 text-gold-accent hover:text-gold-hover text-base font-medium border-t border-white/10 mt-2">Booking</a>
     </div>
   </header>
 
-  <!-- Contact -->
-  <section id="contact" class="min-h-screen flex items-center justify-center py-16 bg-gradient-section text-white">
-    <div class="max-w-4xl mx-auto px-6 w-full fade-in">
-      <h2 class="text-3xl sm:text-4xl font-bold text-gold mb-8 text-center">Contact Us</h2>
-      <div class="glassmorphism p-6 sm:p-8 rounded-xl shadow-lg">
-        <form id="contact-form" class="space-y-6">
-          <input type="text" name="name" placeholder="Your Name" required class="w-full p-4 rounded-lg bg-white text-gray-900 border border-gray-300 focus:border-gold">
-          <input type="email" name="email" placeholder="Your Email" required class="w-full p-4 rounded-lg bg-white text-gray-900 border border-gray-300 focus:border-gold">
-          <select name="inquiry_type" required class="w-full p-4 rounded-lg bg-white text-gray-900 border border-gray-300 focus:border-gold">
-            <option value="" disabled selected>Select Inquiry Type</option>
-            <option value="private_consultation">Private Consultation</option>
-            <option value="site_visit">Site Visit</option>
-            <option value="buy_property">Buy Property</option>
-          </select>
-          <textarea name="message" rows="5" placeholder="What do you want to discuss? Or which property do you want to inspect or purchase?" class="w-full p-4 rounded-lg bg-white text-gray-900 border border-gray-300 focus:border-gold"></textarea>
-          <div class="flex justify-center">
-            <button type="button" id="whatsapp-button" class="bg-gold text-white px-6 py-3 rounded-full font-semibold hover:bg-yellow-500 transition hover-scale">Send via WhatsApp</button>
+  <section id="contact" class="min-h-screen flex items-center justify-center py-20 pt-32 bg-gradient-section text-white">
+    <div class="max-w-5xl mx-auto px-6 lg:px-8 w-full fade-in">
+      <h2 class="text-4xl sm:text-5xl font-extrabold text-gold-accent mb-12 text-center font-serif">Book a Private Consultation 🗓️</h2>
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+        <div class="glassmorphism p-6 sm:p-10 rounded-3xl shadow-card-elevated hover-scale">
+          <h3 class="text-2xl font-semibold text-white mb-6">Send a Quick Inquiry</h3>
+          <form id="contact-form" class="space-y-6">
+            <input type="text" name="name" placeholder="Your Name" required class="w-full p-4">
+            <input type="email" name="email" placeholder="Your Email" required class="w-full p-4">
+            <select name="inquiry_type" required class="w-full p-4">
+              <option value="" disabled selected class="text-gray-500">Select Inquiry Type</option>
+              <option value="private_consultation">Private Consultation</option>
+              <option value="site_visit">Site Visit</option>
+              <option value="buy_property">Buy Property</option>
+            </select>
+            <textarea name="message" rows="5" placeholder="What do you want to discuss? Or which property do you want to inspect or purchase?" class="w-full p-4"></textarea>
+            <div class="flex justify-center">
+              <button type="button" id="whatsapp-button" class="bg-gold-accent text-dark-bg px-8 py-4 rounded-full font-bold text-lg hover:bg-gold-hover transition hover-scale cta-glow">Send via WhatsApp</button>
+            </div>
+          </form>
+        </div>
+        
+        <div class="space-y-8">
+          <div class="bg-dark-card p-8 rounded-3xl shadow-card-elevated fade-in hover-scale">
+            <h3 class="text-2xl font-semibold text-gold-accent mb-4">Our Exclusive Location</h3>
+            <div class="space-y-4 text-gray-300">
+              <p class="flex items-start"><span class="text-gold-accent mr-3 text-xl mt-0.5">📍</span> Suite 20E Jinifa Plaza, Plot 1014 Ademulegun Street, Central Business District, Abuja</p>
+              <p class="flex items-center"><span class="text-gold-accent mr-3 text-xl">📞</span> <a href="tel:+2348052957041" class="hover:text-gold-accent transition">0805 295 7041</a></p>
+              <p class="flex items-center"><span class="text-gold-accent mr-3 text-xl">✉️</span> <a href="mailto:horventluxury@gmail.com" class="hover:text-gold-accent transition">horventluxury@gmail.com</a></p>
+            </div>
           </div>
-        </form>
+          
+          <div id="map" class="w-full h-80 rounded-3xl fade-in"></div>
+        </div>
       </div>
-      <div class="mt-8 text-center space-y-4 text-gray-200">
-        <p class="text-base"><span class="text-gold">📍</span> Suite 20E Jinifa Plaza, Plot 1014 Ademulegun Street, Central Business District, Abuja</p>
-        <p class="text-base"><span class="text-gold">📞</span> <a href="tel:+2348052957041" class="hover:text-gold transition">0805 295 7041</a></p>
-        <p class="text-base"><span class="text-gold">✉️</span> <a href="mailto:horventluxury@gmail.com" class="hover:text-gold transition">horventluxury@gmail.com</a></p>
-      </div>
-      <!-- Map Container -->
-      <div id="map" class="mt-8 w-full h-96 rounded-xl border border-gray-200 fade-in"></div>
     </div>
   </section>
 
-  <!-- Footer -->
-  <footer class="bg-gray-900 text-gray-300 py-8 text-center text-sm">
-    <p>© 2025 Bulgani Urban Homes Ltd. All Rights Reserved.</p>
-    <p>Luxury Real Estate | Investment Advisory | Property Development</p>
-    <div class="mt-4 flex justify-center space-x-4">
-      <a href="#" class="text-gray-300 hover:text-gold transition">Privacy Policy</a>
-      <a href="#" class="text-gray-300 hover:text-gold transition">Terms of Service</a>
+  <footer class="bg-dark-card text-gray-400 py-10 text-center text-sm border-t border-white/5">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+      <p class="text-lg font-bold text-gold-accent mb-4">Bulgani Urban Homes Ltd</p>
+      <p>© 2025 Bulgani Urban Homes Ltd. All Rights Reserved.</p>
+      <p class="text-xs mt-1">Luxury Real Estate | Investment Advisory | Property Development</p>
+      <div class="mt-6 flex justify-center space-x-6">
+        <a href="#" class="text-gray-400 hover:text-gold-accent transition">Privacy Policy</a>
+        <a href="#" class="text-gray-400 hover:text-gold-accent transition">Terms of Service</a>
+      </div>
     </div>
   </footer>
 
-  <!-- Leaflet JS -->
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script>
     // Initialize the map
-    const map = L.map('map').setView([9.0820, 7.4913], 15); // Coordinates for Central Business District, Abuja
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    }).addTo(map);
-    L.marker([9.0820, 7.4913]).addTo(map)
+    const map = L.map('map', {
+      scrollWheelZoom: false // Disable scroll wheel zoom for better mobile experience
+    }).setView([9.0820, 7.4913], 15); // Coordinates for Central Business District, Abuja
+
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+      subdomains: 'abcd',
+      maxZoom: 19
+    }).addTo(map); // Using a dark-mode tile layer for consistency
+    
+    // Add custom marker with gold color (CSS only) or default Leaflet marker
+    const goldIcon = new L.Icon({
+      iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-gold.png',
+      shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+      iconSize: [25, 41],
+      iconAnchor: [12, 41],
+      popupAnchor: [1, -34],
+      shadowSize: [41, 41]
+    });
+
+    L.marker([9.0820, 7.4913], {icon: goldIcon}).addTo(map)
       .bindPopup('Bulgani Urban Homes<br>Suite 20E Jinifa Plaza, CBD, Abuja')
       .openPopup();
 
@@ -195,6 +263,7 @@
       const whatsappMessage = `Hello Bulgani Urban Homes,%0A%0AName: ${encodeURIComponent(name)}%0AEmail: ${encodeURIComponent(email)}%0AInquiry Type: ${encodeURIComponent(inquiryType)}%0AMessage: ${encodeURIComponent(message)}`;
 
       // WhatsApp URL with phone number and pre-filled message
+      // NOTE: The original phone number in the HTML was 08052957041 (+2348052957041), but the JS used +2348149293079. Sticking with the number in the JS for the link, as it's the action number.
       const whatsappUrl = `https://wa.me/+2348149293079?text=${whatsappMessage}`;
       window.open(whatsappUrl, '_blank');
     });
