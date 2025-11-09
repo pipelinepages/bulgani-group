@@ -6,14 +6,38 @@
   <title>Bulgani Urban Homes Ltd</title>
   <link rel="icon" type="image/png" href="bulgani-logo.png">
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
-  <!-- Swiper CSS for Carousel -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+  
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            // Dark mode palette
+            'dark-bg': '#0A0A0A', // Deep black background
+            'dark-card': '#1C1C1E', // Slightly lighter card background (zinc-800 equivalent)
+            'gold-accent': '#C2952E', // Slightly muted, elegant gold (used instead of bright #d4af37)
+            'gold-hover': '#D4AF37', // Brighter gold for interaction
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            serif: ['Playfair Display', 'serif'],
+          },
+          boxShadow: {
+            // Framer-style elevation/glow
+            '3xl': '0 35px 60px -15px rgba(0, 0, 0, 0.4)',
+            'card-elevated': '0 10px 20px rgba(0, 0, 0, 0.2), 0 5px 10px rgba(194, 149, 46, 0.1)',
+          }
+        }
+      }
+    }
+  </script>
+  
   <style>
     /* Custom Font Families */
     body {
-      font-family: 'Poppins', sans-serif;
+      font-family: 'Inter', sans-serif;
     }
     h1, h2, h3, h4 {
       font-family: 'Playfair Display', serif;
@@ -23,18 +47,20 @@
       scroll-behavior: smooth;
     }
     /* Custom Colors */
-    .text-gold { color: #d4af37; }
-    .bg-gold { background-color: #d4af37; }
+    .text-gold-accent { color: #C2952E; }
+    .bg-gold-accent { background-color: #C2952E; }
     .bg-gradient-hero {
-      background: linear-gradient(135deg, #1a202c 0%, #2d3748 100%);
+      /* Darker, moodier gradient */
+      background: linear-gradient(135deg, #0A0A0A 0%, #171717 100%);
     }
-    /* Glassmorphism for Hero Overlay */
+    /* Glassmorphism for Hero Overlay - Dark Mode Compliant */
     .glassmorphism {
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(28, 28, 30, 0.6); /* dark-card with opacity */
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.08); /* subtle white border */
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
     }
-    /* Elegant List Styling */
+    /* Elegant List Styling - Updated for dark mode */
     .elegant-list li {
       position: relative;
       padding-left: 1.5rem;
@@ -45,13 +71,15 @@
       content: '✦';
       position: absolute;
       left: 0;
-      color: #d4af37;
+      color: #C2952E;
       font-size: 1rem;
       line-height: 1.5;
     }
     /* Mobile Menu */
     .mobile-menu {
       display: none;
+      /* Overlay styling for mobile menu */
+      transition: all 0.3s ease-out;
     }
     @media (max-width: 640px) {
       .desktop-nav {
@@ -62,6 +90,8 @@
       }
       .mobile-menu.active {
         display: flex;
+        opacity: 1;
+        visibility: visible;
       }
     }
     /* Project Image/Video Styling */
@@ -69,7 +99,8 @@
       width: 100%;
       height: 250px;
       object-fit: cover;
-      border-radius: 0.5rem;
+      border-radius: 0.75rem; /* Smoother corners */
+      transition: transform 0.3s ease-out;
     }
     /* Modal Styling */
     .modal {
@@ -79,7 +110,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background-color: rgba(0, 0, 0, 0.9);
+      background-color: rgba(0, 0, 0, 0.95); /* Deeper overlay */
       z-index: 50;
       align-items: center;
       justify-content: center;
@@ -91,7 +122,7 @@
     .modal-image, .modal-video {
       max-width: 90%;
       max-height: 90vh;
-      border-radius: 0.5rem;
+      border-radius: 0.75rem;
       object-fit: contain;
     }
     /* Parallax Effect */
@@ -103,8 +134,8 @@
     /* Animations */
     .fade-in {
       opacity: 0;
-      transform: translateY(20px);
-      animation: fadeIn 1s ease-out forwards;
+      transform: translateY(15px);
+      animation: fadeIn 0.8s ease-out forwards;
     }
     @keyframes fadeIn {
       to {
@@ -114,189 +145,199 @@
     }
     /* Hover Effects */
     .hover-scale {
-      transition: transform 0.3s ease;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
     .hover-scale:hover {
-      transform: scale(1.05);
+      transform: scale(1.03);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
     }
     /* Swiper Custom Styling */
     .swiper-button-prev,
     .swiper-button-next {
-      color: #d4af37;
-      background: rgba(0, 0, 0, 0.5);
+      color: #C2952E;
+      background: rgba(0, 0, 0, 0.6);
       border-radius: 50%;
-      width: 40px;
-      height: 40px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      width: 44px; /* Larger controls */
+      height: 44px;
+      opacity: 0.8;
+      transition: opacity 0.3s;
+    }
+    .swiper-button-prev:hover,
+    .swiper-button-next:hover {
+      opacity: 1;
+      background: rgba(0, 0, 0, 0.8);
     }
     .swiper-button-prev::after,
     .swiper-button-next::after {
       font-size: 20px;
     }
     .swiper-pagination-bullet {
-      background: #d4af37;
+      background: #C2952E;
     }
     /* Price Tag Styling */
     .price-tag {
-      background-color: #d4af37;
+      background-color: #C2952E;
       color: white;
       padding: 0.5rem 1rem;
-      border-radius: 0.25rem;
+      border-radius: 9999px; /* Pill shape */
       font-weight: 600;
       display: inline-block;
       margin-top: 0.5rem;
     }
+    
+    /* Framer-style navigation bar */
+    .framer-nav {
+      background: rgba(28, 28, 30, 0.8); /* Dark card with opacity */
+      backdrop-filter: blur(15px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    
+    /* Hover glow for CTA buttons */
+    .cta-glow {
+      box-shadow: 0 0 0 0 rgba(194, 149, 46, 0);
+      transition: box-shadow 0.3s ease;
+    }
+    .cta-glow:hover {
+      box-shadow: 0 0 20px rgba(194, 149, 46, 0.6);
+    }
+    
   </style>
 </head>
-<body class="bg-gray-50 text-gray-900">
+<body class="bg-dark-bg text-gray-100">
 
-  <!-- Header -->
-  <header class="bg-white sticky top-0 z-20 shadow-xl">
+  <header class="framer-nav fixed top-0 w-full z-20">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
-      <!-- Logo and Name -->
       <div class="flex items-center space-x-3">
         <a href="#home">
-          <img src="bulgani-logo.png" alt="Bulgani Group Logo" class="w-12 sm:w-16" />
+          <img src="bulgani-logo.png" alt="Bulgani Group Logo" class="w-10 sm:w-12" />
         </a>
         <div>
-          <h1 class="text-xl sm:text-2xl font-bold text-gold">Bulgani Urban Homes</h1>
-          <p class="text-xs sm:text-sm text-gray-600"></p>
+          <h1 class="text-xl sm:text-2xl font-bold text-gold-accent font-serif tracking-tight">Bulgani Urban Homes</h1>
+          <p class="text-xs sm:text-sm text-gray-400"></p>
         </div>
       </div>
-      <!-- Navigation -->
-      <nav class="desktop-nav hidden sm:flex space-x-6 text-gray-600 text-sm font-medium">
-        <a href="#projects" class="hover:text-gold transition">Projects</a>
-        <a href="#about" class="hover:text-gold transition">About Our Clients</a>
-        <a href="booking.html" class="hover:text-gold transition">Booking</a>
+      <nav class="desktop-nav hidden sm:flex space-x-8 text-gray-300 text-sm font-medium">
+        <a href="#projects" class="hover:text-gold-hover transition">Projects</a>
+        <a href="#about" class="hover:text-gold-hover transition">About Our Clients</a>
+        <a href="booking.html" class="bg-gold-accent text-dark-bg px-4 py-2 rounded-full font-semibold hover:bg-gold-hover transition hover-scale">Booking</a>
       </nav>
-      <!-- Mobile Nav Button -->
-      <button class="mobile-menu-button sm:hidden text-gray-600 hover:text-gold focus:outline-none">
+      <button class="mobile-menu-button sm:hidden text-gray-300 hover:text-gold-hover focus:outline-none">
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
         </svg>
       </button>
     </div>
-    <!-- Mobile Menu -->
-    <div class="mobile-menu flex-col items-center bg-white shadow-lg px-4 py-4 sm:hidden">
-      <a href="#projects" class="block py-2 text-gray-600 hover:text-gold text-sm font-medium">Projects</a>
-      <a href="#about" class="block py-2 text-gray-600 hover:text-gold text-sm font-medium">About Our Clients</a>
-      <a href="booking.html" class="block py-2 text-gray-600 hover:text-gold text-sm font-medium">Booking</a>
+    <div class="mobile-menu flex-col items-center bg-dark-card/90 shadow-2xl px-4 py-4 sm:hidden fixed inset-x-0 top-[70px] border-t border-white/5 opacity-0 visibility-hidden">
+      <a href="#projects" class="block py-2 text-gray-300 hover:text-gold-hover text-base font-medium">Projects</a>
+      <a href="#about" class="block py-2 text-gray-300 hover:text-gold-hover text-base font-medium">About Our Clients</a>
+      <a href="booking.html" class="block py-2 text-gold-accent hover:text-gold-hover text-base font-medium border-t border-white/10 mt-2">Booking</a>
     </div>
   </header>
 
-  <!-- Hero -->
-  <section id="home" class="relative bg-gradient-hero parallax min-h-screen flex items-center justify-center text-center" style="background-image: url('your-hero-image.jpg');">
-    <div class="glassmorphism p-8 sm:p-12 rounded-2xl max-w-3xl mx-auto fade-in">
-      <h2 class="text-3xl sm:text-5xl font-bold text-white mb-6">Landmarks Today, Legacies Tomorrow</h2>
-      <ul class="elegant-list text-base sm:text-lg text-white mb-8 max-w-md mx-auto">
+  <section id="home" class="relative bg-gradient-hero parallax min-h-screen flex items-center justify-center text-center pt-24" style="background-image: url('your-hero-image.jpg');">
+    <div class="absolute inset-0 bg-dark-bg opacity-70 pointer-events-none"></div> 
+
+    <div class="glassmorphism p-8 sm:p-16 rounded-3xl max-w-4xl mx-auto fade-in relative">
+      <h2 class="text-4xl sm:text-6xl font-extrabold text-white mb-6 font-serif tracking-tight leading-tight">Landmarks Today, Legacies Tomorrow</h2>
+      <ul class="elegant-list text-base sm:text-xl text-gray-200 mb-8 max-w-lg mx-auto">
         <li>Land Acquisition & Development</li>
         <li>Off-Market Properties & Premium Returns</li>
         <li>Exclusive Residential & Commercial Projects</li>
       </ul>
-      <a href="#projects" class="bg-gold text-white px-6 py-3 rounded-full font-semibold hover:bg-yellow-500 transition hover-scale">Explore Our Projects</a>
+      <a href="#projects" class="bg-gold-accent text-dark-bg px-8 py-4 rounded-full font-bold text-lg hover:bg-gold-hover transition hover-scale cta-glow">Explore Our Projects</a>
     </div>
   </section>
 
-  <!-- Projects -->
-  <section id="projects" class="min-h-screen py-16 bg-gray-100">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6">
-      <h2 class="text-3xl sm:text-4xl font-bold text-gold mb-12 text-center fade-in">Our Projects</h2>
+  <section id="projects" class="min-h-screen py-20 bg-dark-bg border-t border-white/5">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+      <h2 class="text-4xl sm:text-5xl font-extrabold text-gold-accent mb-16 text-center font-serif fade-in">Our Projects ✨</h2>
       
-      <!-- Completed Projects -->
-      <h3 class="text-2xl font-semibold text-gray-800 mb-8 fade-in">Completed Projects</h3>
-      <div id="pyakasa-project" class="grid grid-cols-1 gap-8 mb-16">
-        <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition fade-in">
+      <h3 class="text-3xl font-semibold text-gray-200 mb-10 border-b border-gold-accent/20 pb-4 fade-in">Completed Projects</h3>
+      <div id="pyakasa-project" class="grid grid-cols-1 gap-12 mb-20">
+        <div class="bg-dark-card p-8 rounded-3xl shadow-card-elevated transition fade-in hover-scale">
           <div class="swiper mySwiper">
             <div class="swiper-wrapper">
-              <div class="swiper-slide"><img src="pyakasa-image2.jpg" alt="Pyakasa Project Image 1" class="project-image"></div>
-              <div class="swiper-slide"><img src="pyakasa-image6.jpg" alt="Pyakasa Project Image 2" class="project-image"></div>
-              <div class="swiper-slide"><img src="pyakasa-image9.jpg" alt="Pyakasa Project Image 3" class="project-image"></div>
+              <div class="swiper-slide"><img src="pyakasa-image2.jpg" alt="Pyakasa Project Image 1" class="project-image" onclick="openModal(this)"></div>
+              <div class="swiper-slide"><img src="pyakasa-image6.jpg" alt="Pyakasa Project Image 2" class="project-image" onclick="openModal(this)"></div>
+              <div class="swiper-slide"><img src="pyakasa-image9.jpg" alt="Pyakasa Project Image 3" class="project-image" onclick="openModal(this)"></div>
             </div>
             <div class="swiper-button-next"></div>
             <div class="swiper-button-prev"></div>
             <div class="swiper-pagination"></div>
           </div>
-          <h4 class="text-xl font-semibold text-gray-800 mt-6">Pyakasa Project</h4>
-          <p class="text-gray-600">Residential</p>
-          <p class="text-gray-500 text-sm mt-2">4 bedroom duplex with BQ on 450sqm</p>
-          <div class="mt-6 text-center">
-            <a href="booking.html" class="bg-gold text-white px-6 py-3 rounded-full font-semibold hover:bg-yellow-500 transition hover-scale">Book a Site Visit</a>
+          <h4 class="text-2xl font-semibold text-white mt-8">Pyakasa Project</h4>
+          <p class="text-gold-accent font-medium">Residential</p>
+          <p class="text-gray-400 text-sm mt-2">4 bedroom duplex with BQ on 450sqm</p>
+          <div class="mt-8 text-center">
+            <a href="booking.html" class="bg-gold-accent text-dark-bg px-6 py-3 rounded-full font-semibold hover:bg-gold-hover transition hover-scale cta-glow">Book a Site Visit</a>
           </div>
         </div>
       </div>
 
-      <!-- Ongoing Projects -->
-      <h3 class="text-2xl font-semibold text-gray-800 mb-8 fade-in">Ongoing Projects</h3>
-      <div id="ongoing-projects" class="grid grid-cols-1 gap-8 mb-16">
-        <!-- Kubwa Project -->
-        <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition fade-in">
+      <h3 class="text-3xl font-semibold text-gray-200 mb-10 border-b border-gold-accent/20 pb-4 fade-in">Ongoing Projects</h3>
+      <div id="ongoing-projects" class="grid grid-cols-1 md:grid-cols-2 gap-12 mb-20">
+        <div class="bg-dark-card p-8 rounded-3xl shadow-card-elevated transition fade-in hover-scale">
           <div class="swiper mySwiper">
             <div class="swiper-wrapper">
-              <div class="swiper-slide"><img src="kubwa-image2.jpg" alt="Kubwa Project Image 1" class="project-image"></div>
-              <div class="swiper-slide"><img src="kubwa-image3.jpg" alt="Kubwa Project Image 2" class="project-image"></div>
-              <div class="swiper-slide"><img src="kubwa-image4.jpg" alt="Kubwa Project Image 3" class="project-image"></div>
-              <div class="swiper-slide"><img src="kubwa-image5.jpg" alt="Kubwa Project Image 4" class="project-image"></div>
-              <div class="swiper-slide"><img src="kubwa-image6.jpg" alt="Kubwa Project Image 5" class="project-image"></div>
+              <div class="swiper-slide"><img src="kubwa-image2.jpg" alt="Kubwa Project Image 1" class="project-image" onclick="openModal(this)"></div>
+              <div class="swiper-slide"><img src="kubwa-image3.jpg" alt="Kubwa Project Image 2" class="project-image" onclick="openModal(this)"></div>
+              <div class="swiper-slide"><img src="kubwa-image4.jpg" alt="Kubwa Project Image 3" class="project-image" onclick="openModal(this)"></div>
+              <div class="swiper-slide"><img src="kubwa-image5.jpg" alt="Kubwa Project Image 4" class="project-image" onclick="openModal(this)"></div>
+              <div class="swiper-slide"><img src="kubwa-image6.jpg" alt="Kubwa Project Image 5" class="project-image" onclick="openModal(this)"></div>
             </div>
             <div class="swiper-button-next"></div>
             <div class="swiper-button-prev"></div>
             <div class="swiper-pagination"></div>
           </div>
-          <h4 class="text-xl font-semibold text-gray-800 mt-6">Kubwa Project</h4>
-          <p class="text-gray-600">Residential</p>
-          <p class="text-gray-500 text-sm mt-2">42 units of 2-bedroom flats all en-suite</p>
-          <div class="mt-6 text-center">
-            <a href="booking.html" class="bg-gold text-white px-6 py-3 rounded-full font-semibold hover:bg-yellow-500 transition hover-scale">Book a Site Visit</a>
+          <h4 class="text-2xl font-semibold text-white mt-8">Kubwa Project</h4>
+          <p class="text-gold-accent font-medium">Residential</p>
+          <p class="text-gray-400 text-sm mt-2">42 units of 2-bedroom flats all en-suite</p>
+          <div class="mt-8 text-center">
+            <a href="booking.html" class="bg-gold-accent text-dark-bg px-6 py-3 rounded-full font-semibold hover:bg-gold-hover transition hover-scale cta-glow">Book a Site Visit</a>
           </div>
         </div>
-        <!-- Apo-Gude Project -->
-        <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition fade-in">
+        <div class="bg-dark-card p-8 rounded-3xl shadow-card-elevated transition fade-in hover-scale">
           <div class="swiper mySwiper">
             <div class="swiper-wrapper">
-              <div class="swiper-slide"><img src="apo-gude-image1.jpeg" alt="Apo-Gude Project Image 1" class="project-image"></div>
-              <div class="swiper-slide"><img src="apo-gude-image2.jpeg" alt="Apo-Gude Project Image 2" class="project-image"></div>
-              <div class="swiper-slide"><img src="apo-gude-image3.jpeg" alt="Apo-Gude Project Image 3" class="project-image"></div>
-              <div class="swiper-slide"><img src="apo-gude-image4.jpeg" alt="Apo-Gude Project Image 4" class="project-image"></div>
+              <div class="swiper-slide"><img src="apo-gude-image1.jpeg" alt="Apo-Gude Project Image 1" class="project-image" onclick="openModal(this)"></div>
+              <div class="swiper-slide"><img src="apo-gude-image2.jpeg" alt="Apo-Gude Project Image 2" class="project-image" onclick="openModal(this)"></div>
+              <div class="swiper-slide"><img src="apo-gude-image3.jpeg" alt="Apo-Gude Project Image 3" class="project-image" onclick="openModal(this)"></div>
+              <div class="swiper-slide"><img src="apo-gude-image4.jpeg" alt="Apo-Gude Project Image 4" class="project-image" onclick="openModal(this)"></div>
             </div>
             <div class="swiper-button-next"></div>
             <div class="swiper-button-prev"></div>
             <div class="swiper-pagination"></div>
           </div>
-          <h4 class="text-xl font-semibold text-gray-800 mt-6">Apo-Gude Project</h4>
-          <p class="text-gray-600">Residential</p>
-          <p class="text-gray-500 text-sm mt-2">Under construction, details coming soon</p>
-          <div class="mt-6 text-center">
-            <a href="booking.html" class="bg-gold text-white px-6 py-3 rounded-full font-semibold hover:bg-yellow-500 transition hover-scale">Book a Site Visit</a>
+          <h4 class="text-2xl font-semibold text-white mt-8">Apo-Gude Project</h4>
+          <p class="text-gold-accent font-medium">Residential</p>
+          <p class="text-gray-400 text-sm mt-2">Under construction, details coming soon</p>
+          <div class="mt-8 text-center">
+            <a href="booking.html" class="bg-gold-accent text-dark-bg px-6 py-3 rounded-full font-semibold hover:bg-gold-hover transition hover-scale cta-glow">Book a Site Visit</a>
           </div>
         </div>
       </div>
 
-      <!-- For Sale Projects -->
-      <h3 class="text-2xl font-semibold text-gray-800 mb-8 fade-in">For Sale</h3>
-      <div id="for-sale-projects" class="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-16">
-        <!-- For Sale Project 1 -->
-        <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition fade-in relative group">
+      <h3 class="text-3xl font-semibold text-gray-200 mb-10 border-b border-gold-accent/20 pb-4 fade-in">For Sale</h3>
+      <div id="for-sale-projects" class="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-20">
+        <div class="bg-dark-card p-8 rounded-3xl shadow-card-elevated transition fade-in relative group">
           <div class="relative">
-            <video autoplay loop muted playsinline class="w-full h-64 object-cover rounded-lg" id="video1">
+            <video autoplay loop muted playsinline class="project-video" id="video1">
               <source src="katampe-duplex.mp4" type="video/mp4">
               Your browser does not support the video tag.
             </video>
-            <!-- Overlay Button -->
             <button 
               onclick="togglePlay('video1', this)" 
-              class="absolute inset-0 flex items-center justify-center text-white bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition rounded-lg"
+              class="absolute inset-0 flex items-center justify-center text-white text-3xl bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition duration-300 rounded-lg"
             >
-              ▶
+              <span class="p-4 bg-dark-card/70 rounded-full border border-white/20">❚❚</span>
             </button>
           </div>
-          <!-- Price Tag -->
-          <span class="inline-block bg-gold text-white text-sm font-semibold px-4 py-1 rounded-full mt-4">₦2,000,000,000</span>
-          <h4 class="text-xl font-semibold text-gray-800 mt-3">Katampe Extension Luxury Duplex</h4>
-          <p class="text-gray-600">Residential</p>
-          <p class="text-gray-500 text-sm mt-2">5 bedroom fully detached duplex with smart automation and swimming pool</p>
-          <ul class="elegant-list text-gray-600 text-sm mt-4">
+          <span class="price-tag">₦2,000,000,000</span>
+          <h4 class="text-2xl font-semibold text-white mt-4">Katampe Extension Luxury Duplex</h4>
+          <p class="text-gold-accent font-medium">Residential</p>
+          <p class="text-gray-400 text-sm mt-2">5 bedroom fully detached duplex with smart automation and swimming pool</p>
+          <ul class="elegant-list text-gray-400 text-sm mt-6">
             <li>5 Bedrooms En-suite</li>
             <li>Full Smart Automation</li>
             <li>World Class Finishing</li>
@@ -309,33 +350,30 @@
             <li>CCTV Surveillance</li>
             <li>Cinema Room</li>
           </ul>
-          <p class="text-gray-500 text-sm mt-2"><strong>Title:</strong> Certificate of Occupancy (C of O)</p>
-          <div class="mt-6 text-center">
-            <a href="booking.html" class="bg-gold text-white px-6 py-3 rounded-full font-semibold hover:bg-yellow-500 transition hover-scale">Enquire Now</a>
+          <p class="text-gray-400 text-sm mt-4"><strong>Title:</strong> Certificate of Occupancy (C of O)</p>
+          <div class="mt-8 text-center">
+            <a href="booking.html" class="bg-gold-accent text-dark-bg px-6 py-3 rounded-full font-semibold hover:bg-gold-hover transition hover-scale cta-glow">Enquire Now</a>
           </div>
         </div>
 
-        <!-- For Sale Project 2 -->
-        <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition fade-in relative group">
+        <div class="bg-dark-card p-8 rounded-3xl shadow-card-elevated transition fade-in relative group">
           <div class="relative">
-            <video autoplay loop muted playsinline class="w-full h-64 object-cover rounded-lg" id="video2">
+            <video autoplay loop muted playsinline class="project-video" id="video2">
               <source src="katampe-apartments.mp4" type="video/mp4">
               Your browser does not support the video tag.
             </video>
-            <!-- Overlay Button -->
             <button 
               onclick="togglePlay('video2', this)" 
-              class="absolute inset-0 flex items-center justify-center text-white bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition rounded-lg"
+              class="absolute inset-0 flex items-center justify-center text-white text-3xl bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition duration-300 rounded-lg"
             >
-              ▶
+              <span class="p-4 bg-dark-card/70 rounded-full border border-white/20">❚❚</span>
             </button>
           </div>
-          <!-- Price Tag -->
-          <span class="inline-block bg-gold text-white text-sm font-semibold px-4 py-1 rounded-full mt-4">₦3,000,000,000</span>
-          <h4 class="text-xl font-semibold text-gray-800 mt-3">Katampe Extension Apartment Complex</h4>
-          <p class="text-gray-600">Residential</p>
-          <p class="text-gray-500 text-sm mt-2">28 units of 2-bedroom flats and 4 units of 1-bedroom flats on 4,500 sqm</p>
-          <ul class="elegant-list text-gray-600 text-sm mt-4">
+          <span class="price-tag">₦3,000,000,000</span>
+          <h4 class="text-2xl font-semibold text-white mt-4">Katampe Extension Apartment Complex</h4>
+          <p class="text-gold-accent font-medium">Residential</p>
+          <p class="text-gray-400 text-sm mt-2">28 units of 2-bedroom flats and 4 units of 1-bedroom flats on 4,500 sqm</p>
+          <ul class="elegant-list text-gray-400 text-sm mt-6">
             <li>28 Units of 2-Bedroom Flats</li>
             <li>4 Units of 1-Bedroom Flats</li>
             <li>Land Size: 4,500 sqm</li>
@@ -346,119 +384,124 @@
             <li>Ideal for Long-Term Returns or Corporate Lease</li>
             <li>Direct to Owner (5% Professional Fee)</li>
           </ul>
-          <div class="mt-6 text-center">
-            <a href="booking.html" class="bg-gold text-white px-6 py-3 rounded-full font-semibold hover:bg-yellow-500 transition hover-scale">Enquire Now</a>
+          <div class="mt-8 text-center">
+            <a href="booking.html" class="bg-gold-accent text-dark-bg px-6 py-3 rounded-full font-semibold hover:bg-gold-hover transition hover-scale cta-glow">Enquire Now</a>
           </div>
         </div>
       </div>
 
-      <!-- Video Toggle Script -->
       <script>
         function togglePlay(videoId, btn) {
           const video = document.getElementById(videoId);
           if (video.paused) {
             video.play();
-            btn.textContent = "❚❚"; // Pause icon
+            btn.innerHTML = '<span class="p-4 bg-dark-card/70 rounded-full border border-white/20">❚❚</span>'; // Pause icon
           } else {
             video.pause();
-            btn.textContent = "▶"; // Play icon
+            btn.innerHTML = '<span class="p-4 bg-dark-card/70 rounded-full border border-white/20">▶</span>'; // Play icon
           }
         }
       </script>
     </div>
   </section>
 
-  <!-- Modal for Expanded Images -->
   <div class="modal" id="imageModal">
     <img class="modal-image" id="expandedImage" src="" alt="Expanded Project Image">
   </div>
 
-  <!-- Testimonials -->
-  <section id="about" class="min-h-screen py-16 bg-white">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6">
-      <h2 class="text-3xl sm:text-4xl font-bold text-gold mb-12 text-center fade-in">📈 What Our Clients Say</h2>
-      <div class="space-y-8">
-        <blockquote class="italic border-l-4 border-gold pl-6 text-gray-600 text-base sm:text-lg fade-in">
+  <section id="about" class="min-h-screen py-20 bg-dark-card border-t border-b border-white/5">
+    <div class="max-w-5xl mx-auto px-6 lg:px-8">
+      <h2 class="text-4xl sm:text-5xl font-extrabold text-gold-accent mb-16 text-center font-serif fade-in">📈 What Our Clients Say</h2>
+      <div class="space-y-10">
+        <blockquote class="italic border-l-4 border-gold-accent pl-6 text-gray-300 text-lg sm:text-xl fade-in bg-dark-bg p-6 rounded-xl shadow-card-elevated">
           “I closed from the UK without ever stepping foot in Nigeria. I now earn ₦1.2M monthly from a smart duplex in Guzape.” – <strong>Chika O.</strong>
         </blockquote>
-        <blockquote class="italic border-l-4 border-gold pl-6 text-gray-600 text-base sm:text-lg fade-in">
+        <blockquote class="italic border-l-4 border-gold-accent pl-6 text-gray-300 text-lg sm:text-xl fade-in bg-dark-bg p-6 rounded-xl shadow-card-elevated">
           “The best investment experience I’ve had in West Africa. Period.” – <strong>Farouk B.</strong>
         </blockquote>
       </div>
-      <div class="mt-12 text-center">
-        <a href="booking.html" class="bg-gold text-white px-6 py-3 rounded-full font-semibold hover:bg-yellow-500 transition hover-scale">Book a Private Consultation</a>
+      <div class="mt-16 text-center">
+        <a href="booking.html" class="bg-gold-accent text-dark-bg px-8 py-4 rounded-full font-bold text-lg hover:bg-gold-hover transition hover-scale cta-glow">Book a Private Consultation</a>
       </div>
     </div>
   </section>
 
-  <!-- Why Clients Choose Us -->
-  <section class="min-h-screen py-16 bg-gray-100">
-    <div class="max-w-5xl mx-auto px-4 sm:px-6 text-center">
-      <h2 class="text-3xl sm:text-4xl font-bold text-gold mb-12 fade-in">Why Clients Choose Us</h2>
-      <ul class="space-y-6 text-left max-w-2xl mx-auto text-gray-600 text-base fade-in">
-        <li class="flex items-start"><span class="text-gold mr-2">✦</span> Pre-launch access to Nigeria’s most prestigious homes</li>
-        <li class="flex items-start"><span class="text-gold mr-2">✦</span> Fully-managed investment properties</li>
-        <li class="flex items-start"><span class="text-gold mr-2">✦</span> Seamless purchase process from anywhere in the world</li>
-        <li class="flex items-start"><span class="text-gold mr-2">✦</span> Yearly appreciation reports and resale strategies</li>
-        <li class="flex items-start"><span class="text-gold mr-2">✦</span> Direct line to Nigeria’s top-tier developer network</li>
+  <section class="min-h-screen py-20 bg-dark-bg border-b border-white/5">
+    <div class="max-w-6xl mx-auto px-6 lg:px-8 text-center">
+      <h2 class="text-4xl sm:text-5xl font-extrabold text-gold-accent mb-16 font-serif fade-in">Why Clients Choose Us</h2>
+      <ul class="space-y-6 text-left max-w-3xl mx-auto text-gray-300 text-lg">
+        <li class="flex items-start bg-dark-card p-4 rounded-xl shadow-card-elevated fade-in">
+          <span class="text-gold-accent mr-3 text-2xl">✦</span> Pre-launch access to Nigeria’s most prestigious homes
+        </li>
+        <li class="flex items-start bg-dark-card p-4 rounded-xl shadow-card-elevated fade-in" style="animation-delay: 0.1s;">
+          <span class="text-gold-accent mr-3 text-2xl">✦</span> Fully-managed investment properties
+        </li>
+        <li class="flex items-start bg-dark-card p-4 rounded-xl shadow-card-elevated fade-in" style="animation-delay: 0.2s;">
+          <span class="text-gold-accent mr-3 text-2xl">✦</span> Seamless purchase process from anywhere in the world
+        </li>
+        <li class="flex items-start bg-dark-card p-4 rounded-xl shadow-card-elevated fade-in" style="animation-delay: 0.3s;">
+          <span class="text-gold-accent mr-3 text-2xl">✦</span> Yearly appreciation reports and resale strategies
+        </li>
+        <li class="flex items-start bg-dark-card p-4 rounded-xl shadow-card-elevated fade-in" style="animation-delay: 0.4s;">
+          <span class="text-gold-accent mr-3 text-2xl">✦</span> Direct line to Nigeria’s top-tier developer network
+        </li>
       </ul>
-      <div class="mt-12">
-        <a href="booking.html" class="bg-gold text-white px-6 py-3 rounded-full font-semibold hover:bg-yellow-500 transition hover-scale">Book a Private Consultation</a>
+      <div class="mt-16">
+        <a href="booking.html" class="bg-gold-accent text-dark-bg px-8 py-4 rounded-full font-bold text-lg hover:bg-gold-hover transition hover-scale cta-glow">Book a Private Consultation</a>
       </div>
     </div>
   </section>
 
-  <!-- Portfolio Benefits -->
-  <section class="min-h-screen py-16 bg-white">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6">
-      <h2 class="text-3xl sm:text-4xl font-bold text-gold mb-12 text-center fade-in">🏛️ What’s Inside Our Portfolio</h2>
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 text-gray-600 text-base">
-        <div class="bg-gray-50 p-6 rounded-xl shadow-lg hover:shadow-xl transition fade-in">
-          <h3 class="text-xl font-semibold text-gray-900">Off-Market Luxury Properties</h3>
-          <p class="mt-2">Presidential villas, waterfront penthouses, smart estates, and high-yield commercial assets.</p>
+  <section class="min-h-screen py-20 bg-dark-card border-b border-white/5">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+      <h2 class="text-4xl sm:text-5xl font-extrabold text-gold-accent mb-16 text-center font-serif fade-in">🏛️ What’s Inside Our Portfolio</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 text-gray-300 text-base">
+        <div class="bg-dark-bg p-6 rounded-2xl shadow-card-elevated hover-scale transition fade-in">
+          <h3 class="text-xl font-semibold text-white font-serif tracking-tight">Off-Market Luxury Properties</h3>
+          <p class="mt-3 text-sm text-gray-400">Presidential villas, waterfront penthouses, smart estates, and high-yield commercial assets.</p>
         </div>
-        <div class="bg-gray-50 p-6 rounded-xl shadow-lg hover:shadow-xl transition fade-in">
-          <h3 class="text-xl font-semibold text-gray-900">Priority Access to Developer Projects</h3>
-          <p class="mt-2">Co-invest, pre-buy, or co-develop Nigeria’s next big thing—before it hits the market.</p>
+        <div class="bg-dark-bg p-6 rounded-2xl shadow-card-elevated hover-scale transition fade-in" style="animation-delay: 0.1s;">
+          <h3 class="text-xl font-semibold text-white font-serif tracking-tight">Priority Access to Developer Projects</h3>
+          <p class="mt-3 text-sm text-gray-400">Co-invest, pre-buy, or co-develop Nigeria’s next big thing—before it hits the market.</p>
         </div>
-        <div class="bg-gray-50 p-6 rounded-xl shadow-lg hover:shadow-xl transition fade-in">
-          <h3 class="text-xl font-semibold text-gray-900">VIP Closing</h3>
-          <p class="mt-2">Ownership finalized in 48 hours.</p>
+        <div class="bg-dark-bg p-6 rounded-2xl shadow-card-elevated hover-scale transition fade-in" style="animation-delay: 0.2s;">
+          <h3 class="text-xl font-semibold text-white font-serif tracking-tight">VIP Closing</h3>
+          <p class="mt-3 text-sm text-gray-400">Ownership finalized in 48 hours.</p>
         </div>
-        <div class="bg-gray-50 p-6 rounded-xl shadow-lg hover:shadow-xl transition fade-in">
-          <h3 class="text-xl font-semibold text-gray-900">Lifetime Investor Concierge</h3>
-          <p class="mt-2">From property management to resale planning, your team handles it all while you focus on what matters.</p>
+        <div class="bg-dark-bg p-6 rounded-2xl shadow-card-elevated hover-scale transition fade-in" style="animation-delay: 0.3s;">
+          <h3 class="text-xl font-semibold text-white font-serif tracking-tight">Lifetime Investor Concierge</h3>
+          <p class="mt-3 text-sm text-gray-400">From property management to resale planning, your team handles it all while you focus on what matters.</p>
         </div>
       </div>
-      <div class="mt-12 text-center">
-        <a href="booking.html" class="bg-gold text-white px-6 py-3 rounded-full font-semibold hover:bg-yellow-500 transition hover-scale">Book a Private Consultation</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- CTA -->
-  <section class="min-h-screen py-16 bg-gradient-hero text-white text-center">
-    <div class="max-w-3xl mx-auto px-4 sm:px-6">
-      <h2 class="text-3xl sm:text-4xl font-bold mb-6 fade-in">Ready to Join Nigeria’s Inner Circle?</h2>
-      <p class="text-base sm:text-lg text-gray-200 mb-8 fade-in">We only work with 10 clients per quarter. If you’re serious about luxury, legacy, and premium returns…</p>
-      <div class="space-y-4">
-        <a href="booking.html" class="bg-gold text-white px-6 py-3 rounded-full font-semibold hover:bg-yellow-500 transition hover-scale">Join Our Portfolio</a>
-        <p class="text-sm sm:text-base text-gray-300 fade-in">🔒 Limited Slots | 💼 1-on-1 Onboarding | 💬 Direct WhatsApp Access</p>
+      <div class="mt-16 text-center">
+        <a href="booking.html" class="bg-gold-accent text-dark-bg px-8 py-4 rounded-full font-bold text-lg hover:bg-gold-hover transition hover-scale cta-glow">Book a Private Consultation</a>
       </div>
     </div>
   </section>
 
-  <!-- Footer -->
-  <footer class="bg-gray-900 text-gray-300 py-8 text-center text-sm">
-    <p>© 2025 Bulgani Urban Homes Ltd. All Rights Reserved.</p>
-    <p>Luxury Real Estate | Investment Advisory | Property Development</p>
-    <div class="mt-4 flex justify-center space-x-4">
-      <a href="#" class="text-gray-300 hover:text-gold transition">Privacy Policy</a>
-      <a href="#" class="text-gray-300 hover:text-gold transition">Terms of Service</a>
+  <section class="min-h-screen py-20 bg-dark-bg text-white text-center border-b border-white/5">
+    <div class="max-w-3xl mx-auto px-6 lg:px-8">
+      <h2 class="text-4xl sm:text-5xl font-extrabold mb-8 font-serif fade-in">Ready to Join Nigeria’s Inner Circle?</h2>
+      <p class="text-lg sm:text-xl text-gray-300 mb-12 fade-in">We only work with 10 clients per quarter. If you’re serious about luxury, legacy, and premium returns…</p>
+      <div class="space-y-6">
+        <a href="booking.html" class="bg-gold-accent text-dark-bg px-10 py-5 rounded-full font-extrabold text-xl hover:bg-gold-hover transition hover-scale cta-glow">Join Our Portfolio</a>
+        <p class="text-sm sm:text-base text-gray-400 fade-in">🔒 Limited Slots | 💼 1-on-1 Onboarding | 💬 Direct WhatsApp Access</p>
+      </div>
+    </div>
+  </section>
+
+  <footer class="bg-dark-card text-gray-400 py-10 text-center text-sm border-t border-white/5">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+      <p class="text-lg font-bold text-gold-accent mb-4">Bulgani Urban Homes Ltd</p>
+      <p>© 2025 Bulgani Urban Homes Ltd. All Rights Reserved.</p>
+      <p class="text-xs mt-1">Luxury Real Estate | Investment Advisory | Property Development</p>
+      <div class="mt-6 flex justify-center space-x-6">
+        <a href="#" class="text-gray-400 hover:text-gold-accent transition">Privacy Policy</a>
+        <a href="#" class="text-gray-400 hover:text-gold-accent transition">Terms of Service</a>
+      </div>
     </div>
   </footer>
 
-  <!-- Swiper JS for Carousel -->
   <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
   <script>
     // Initialize Swiper
@@ -491,20 +534,17 @@
     });
 
     // Image Modal Functionality
-    const images = document.querySelectorAll('.project-image');
+    function openModal(imageElement) {
+      const modal = document.querySelector('#imageModal');
+      const modalImage = document.querySelector('#expandedImage');
+      modalImage.src = imageElement.src;
+      modalImage.alt = imageElement.alt;
+      modal.classList.add('active');
+    }
+
     const modal = document.querySelector('#imageModal');
-    const modalImage = document.querySelector('#expandedImage');
-
-    images.forEach(image => {
-      image.addEventListener('click', () => {
-        modalImage.src = image.src;
-        modalImage.alt = image.alt;
-        modal.classList.add('active');
-      });
-    });
-
     modal.addEventListener('click', (e) => {
-      if (e.target === modal) {
+      if (e.target === modal || e.target === modalImage) {
         modal.classList.remove('active');
       }
     });
@@ -519,6 +559,7 @@
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
+          entry.target.style.animationDelay = entry.target.dataset.delay || '0s';
           entry.target.classList.add('fade-in');
           observer.unobserve(entry.target);
         }
